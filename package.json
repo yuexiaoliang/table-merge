@@ -1,0 +1,32 @@
+{
+  "name": "table-merge",
+  "version": "0.0.1",
+  "description": "极佳的表格合并方案",
+  "keywords": [
+    "vue",
+    "element-plus"
+  ],
+  "main": "index.ts",
+  "scripts": {
+    "preview:el": "vite examples/element-plus --config vite.config.ts",
+    "preview:antdv": "vite examples/antdv --config vite.config.ts",
+    "test": "vitest"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@table-merge/antdv": "workspace:^1.0.0",
+    "@table-merge/core": "workspace:^1.0.0",
+    "@table-merge/element-plus": "workspace:^1.0.0",
+    "@types/node": "^18.7.16",
+    "@vitejs/plugin-vue": "^3.1.0",
+    "@vitejs/plugin-vue-jsx": "^2.0.1",
+    "ant-design-vue": "^3.2.12",
+    "element-plus": "^2.2.16",
+    "sass": "^1.54.9",
+    "typescript": "^4.8.3",
+    "vite": "^3.1.0",
+    "vitest": "^0.23.2",
+    "vue": "^3.2.39"
+  }
+}
