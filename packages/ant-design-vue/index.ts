@@ -1,8 +1,9 @@
 import { mergeColumn, mergeRow } from '@table-merge/core';
+import type { MergeRange } from '@table-merge/core';
 
-export default (data: any[], columns: any[], options: string = 'column') => {
-  const colMerged = mergeColumn(data);
-  const rowMerged = mergeRow(data);
+export default (data: any[], columns: any[], options: string = 'column', range?: MergeRange) => {
+  const colMerged = mergeColumn(data, range);
+  const rowMerged = mergeRow(data, range);
 
   return columns.map((col, colIndex) => {
     return {

@@ -6,7 +6,12 @@ import { tableMergeElementPlus } from 'table-merge';
 import { data, columns } from '../mock.js';
 
 const mergeCol = tableMergeElementPlus(data);
+const mergeCol2 = tableMergeElementPlus(data, 'column', 2);
+const mergeCol1_2 = tableMergeElementPlus(data, 'column', [1, 2]);
+
 const mergeRow = tableMergeElementPlus(data, 'row');
+const mergeRow2 = tableMergeElementPlus(data, 'row', 2);
+const mergeRow1_2 = tableMergeElementPlus(data, 'row', [1, 2]);
 </script>
 
 <template>
@@ -18,8 +23,36 @@ const mergeRow = tableMergeElementPlus(data, 'row');
   </div>
 
   <div class="box">
+    <div class="box__title">多行合并-指定开始位置-2</div>
+    <el-table ref="table" :data="data" :span-method="mergeRow2" border style="width: 100%">
+      <el-table-column v-for="col in columns" :key="col.prop" :prop="col.prop" :label="col.label" align="center" />
+    </el-table>
+  </div>
+
+  <div class="box">
+    <div class="box__title">多行合并-指定范围-[1-2]</div>
+    <el-table ref="table" :data="data" :span-method="mergeRow1_2" border style="width: 100%">
+      <el-table-column v-for="col in columns" :key="col.prop" :prop="col.prop" :label="col.label" align="center" />
+    </el-table>
+  </div>
+
+  <div class="box">
     <div class="box__title">多列合并</div>
     <el-table ref="table" :data="data" :span-method="mergeCol" border style="width: 100%">
+      <el-table-column v-for="col in columns" :key="col.prop" :prop="col.prop" :label="col.label" align="center" />
+    </el-table>
+  </div>
+
+  <div class="box">
+    <div class="box__title">多列合并-指定开始位置-2</div>
+    <el-table ref="table" :data="data" :span-method="mergeCol2" border style="width: 100%">
+      <el-table-column v-for="col in columns" :key="col.prop" :prop="col.prop" :label="col.label" align="center" />
+    </el-table>
+  </div>
+
+  <div class="box">
+    <div class="box__title">多列合并-指定范围-[1-2]</div>
+    <el-table ref="table" :data="data" :span-method="mergeCol1_2" border style="width: 100%">
       <el-table-column v-for="col in columns" :key="col.prop" :prop="col.prop" :label="col.label" align="center" />
     </el-table>
   </div>
