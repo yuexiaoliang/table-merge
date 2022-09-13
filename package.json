@@ -1,5 +1,5 @@
 {
-  "name": "table-merge",
+  "name": "@table-merge/monorepo",
   "version": "0.0.1",
   "description": "极佳的表格合并方案",
   "keywords": [
