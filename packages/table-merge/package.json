@@ -1,6 +1,6 @@
 {
   "name": "table-merge",
-  "version": "0.0.1-alpha.2",
+  "version": "0.0.1-alpha.3",
   "type": "module",
   "module": "dist/index.mjs",
   "main": "dist/index.cjs",
