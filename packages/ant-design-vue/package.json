@@ -1,6 +1,6 @@
 {
-  "name": "@table-merge/antdv",
-  "version": "1.0.0",
+  "name": "@table-merge/ant-design-vue",
+  "version": "0.0.0",
   "description": "",
   "main": "index.ts",
   "scripts": {
