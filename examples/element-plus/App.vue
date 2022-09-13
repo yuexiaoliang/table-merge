@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import useTableMerge from '@table-merge/element-plus';
+import { tableMergeElementPlus } from 'table-merge';
+// or
+// import tableMergeElementPlus from '@table-merge/element-plus';
+
 import { data, columns } from '../mock.js';
 
-const mergeCol = useTableMerge(data);
-const mergeRow = useTableMerge(data, 'row');
+const mergeCol = tableMergeElementPlus(data);
+const mergeRow = tableMergeElementPlus(data, 'row');
 </script>
 
 <template>

@@ -17,8 +17,9 @@
     "skipLibCheck": true
   },
   "include": [
-    "example",
-    "packages"
+    "packages",
+    "*.ts",
+    "*.d.ts"
   ],
   "references": [
     {

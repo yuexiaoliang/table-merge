@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import useTableMerge from '@table-merge/antdv';
+import { tableMergeAntDesignVue } from 'table-merge';
+// or
+// import tableMergeAntDesignVue from '@table-merge/ant-design-vue';
+
 import { data, columns } from '../mock';
 
 const _col = columns.map((col) => {
@@ -10,9 +13,9 @@ const _col = columns.map((col) => {
   };
 });
 
-const columnsRow = useTableMerge(data, _col, 'row');
+const columnsRow = tableMergeAntDesignVue(data, _col, 'row');
 
-const columnsCol = useTableMerge(data, _col);
+const columnsCol = tableMergeAntDesignVue(data, _col);
 </script>
 
 <template>
