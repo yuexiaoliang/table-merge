@@ -5,6 +5,7 @@
     "preview:el": "vite examples/element-plus --config vite.config.ts",
     "preview:antdv": "vite examples/ant-design-vue --config vite.config.ts",
     "test": "vitest",
+    "coverage": "vitest run --coverage",
     "build": "pnpm run -r build",
     "build:core": "pnpm --filter @table-merge/core build"
   },
@@ -22,20 +23,21 @@
     "url": "https://github.com/yuexiaoliang/table-merge.git"
   },
   "devDependencies": {
+    "@table-merge/ant-design-vue": "workspace:*",
+    "@table-merge/core": "workspace:*",
+    "@table-merge/element-plus": "workspace:*",
     "@types/node": "^18.7.17",
     "@vitejs/plugin-vue": "^3.1.0",
     "@vitejs/plugin-vue-jsx": "^2.0.1",
+    "@vitest/coverage-c8": "^0.23.2",
     "ant-design-vue": "^3.2.12",
     "element-plus": "^2.2.16",
     "sass": "^1.54.9",
+    "table-merge": "workspace:*",
     "typescript": "^4.8.3",
     "vite": "^3.1.0",
     "vite-plugin-dts": "^1.5.0",
     "vitest": "^0.23.2",
-    "vue": "^3.2.39",
-    "table-merge": "workspace:*",
-    "@table-merge/core": "workspace:*",
-    "@table-merge/ant-design-vue": "workspace:*",
-    "@table-merge/element-plus": "workspace:*"
+    "vue": "^3.2.39"
   }
 }
