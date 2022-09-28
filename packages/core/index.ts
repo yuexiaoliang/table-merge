@@ -30,35 +30,26 @@ export function mergeColumn(data: Data, range?: MergeRange): IndexGraph {
 
   const [indexGraph, valueGraph] = getGraph(data);
 
-  for (let colIndex = 0; colIndex < valueGraph.length; colIndex++) {
+  valueGraph.forEach((values, valuesIndex) => {
     let prevIndex = 0;
     let prevValue: any;
     let count = 1;
-    const row = valueGraph[colIndex];
 
-    for (let rowIndex = 0; rowIndex < row.length; rowIndex++) {
-      if (typeof range === 'number' && rowIndex < range) continue;
-
-      if (Array.isArray(range)) {
-        let [start, end] = range;
-        if (typeof start === 'number' && rowIndex < start) continue;
-        if (typeof end === 'number' && rowIndex > end) continue;
-      }
-
-      const value = row[rowIndex];
+    values.forEach((value, valueIndex) => {
+      if (!whetherContinue(range, valueIndex)) return;
 
       if (prevValue === value) {
         count = count + 1;
-        indexGraph[colIndex][prevIndex] = count;
-        indexGraph[colIndex][rowIndex] = 0;
+        indexGraph[valuesIndex][prevIndex] = count;
+        indexGraph[valuesIndex][valueIndex] = 0;
       } else {
         count = 1;
-        prevIndex = rowIndex;
+        prevIndex = valueIndex;
       }
 
       prevValue = value;
-    }
-  }
+    });
+  });
 
   return indexGraph;
 }
@@ -68,26 +59,20 @@ export function mergeRow(data: Data, range?: MergeRange): IndexGraph {
 
   const [indexGraph, valueGraph] = getGraph(data);
 
-  for (let colIndex = 0; colIndex < valueGraph[0].length; colIndex++) {
+  valueGraph[0].forEach((_, valueIndex) => {
     let prevIndex = 0;
     let prevValue: any;
     let count = 1;
 
     valueGraph.forEach((values, rowIndex) => {
-      if (typeof range === 'number' && rowIndex < range) return;
+      if (!whetherContinue(range, rowIndex)) return;
 
-      if (Array.isArray(range)) {
-        let [start, end] = range;
-        if (typeof start === 'number' && rowIndex < start) return;
-        if (typeof end === 'number' && rowIndex > end) return;
-      }
-
-      const value = values[colIndex];
+      const value = values[valueIndex];
 
       if (prevValue === value) {
         count = count + 1;
-        indexGraph[prevIndex][colIndex] = count;
-        indexGraph[rowIndex][colIndex] = 0;
+        indexGraph[prevIndex][valueIndex] = count;
+        indexGraph[rowIndex][valueIndex] = 0;
       } else {
         count = 1;
         prevIndex = rowIndex;
@@ -95,9 +80,21 @@ export function mergeRow(data: Data, range?: MergeRange): IndexGraph {
 
       prevValue = value;
     });
-  }
+  });
 
   return indexGraph;
+}
+
+export function whetherContinue(range: MergeRange, index: number): boolean {
+  if (typeof range === 'number' && index < range) return false;
+
+  if (Array.isArray(range)) {
+    let [start, end] = range;
+    if (typeof start === 'number' && index < start) return false;
+    if (typeof end === 'number' && index > end) return false;
+  }
+
+  return true;
 }
 
 function warn(range: MergeRange) {

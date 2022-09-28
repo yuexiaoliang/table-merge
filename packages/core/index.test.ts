@@ -1,6 +1,6 @@
 import { test, expect, describe } from 'vitest';
 
-import { getGraph, mergeColumn, mergeRow } from './index';
+import { getGraph, mergeColumn, mergeRow, whetherContinue } from './index';
 
 const data = [
   { a: 8, b: 8, c: 2, d: 0 },
@@ -27,6 +27,18 @@ describe('getGraph', () => {
       [5, 3, 3, 3]
     ];
     expect(getGraph(data)).toEqual([indexGraph, valueGraph]);
+  });
+});
+
+describe('methods => whetherContinue', () => {
+  test('Number', () => {
+    const result = whetherContinue(3, 5);
+    expect(result).toBeTruthy();
+  });
+
+  test('Array', () => {
+    const result = whetherContinue([2, 5], 5);
+    expect(result).toBeTruthy();
   });
 });
 
