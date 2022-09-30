@@ -1,113 +1,185 @@
-interface DataItem {
+import { KEYS_TYPE_ERROR, RANGE_TYPE_ERROR } from './constants';
+import { isArray, isObject, isNumber } from './utils';
+
+type RangeValue = number | [number, number];
+
+interface OptionRange {
+  row?: RangeValue;
+  col?: RangeValue;
+}
+
+type OptionRangeIntact = Required<OptionRange>;
+
+type OptionKeys = (string | number)[];
+
+interface Option {
+  keys?: OptionKeys;
+  range?: OptionRange;
+}
+
+interface OptionIntact {
+  keys: OptionKeys;
+  range: OptionRangeIntact;
+}
+
+interface ListItem {
   [key: string]: any;
 }
 
-type Data = DataItem[];
-export type IndexGraph = number[][];
-export type ValueGraph = any[][];
-export type MergeRange = number | number[] | undefined;
+type List = ListItem[];
 
-export const getGraph = (data: Data): [IndexGraph, ValueGraph] => {
-  const indexGraph: IndexGraph = [];
-  const valueGraph: ValueGraph = [];
+interface TableCell {
+  rowSpan: number;
+  colSpan: number;
+  value: any;
+}
 
-  for (let i = 0; i < data.length; i++) {
-    const item = data[i];
-    if (!Array.isArray(indexGraph[i])) indexGraph[i] = [];
-    if (!Array.isArray(valueGraph[i])) valueGraph[i] = [];
+type SpanTypes = keyof Omit<TableCell, 'value'>;
 
-    Object.values(item).forEach((value, index) => {
-      indexGraph[i][index] = 1;
-      valueGraph[i][index] = value;
-    });
-  }
+type TableRow = TableCell[];
+type Table = TableRow[];
 
-  return [indexGraph, valueGraph];
+type Result = Table | null | undefined;
+
+interface RangeStartEnd {
+  rowStart: number;
+  rowEnd: number;
+  colStart: number;
+  colEnd: number;
+}
+
+export const defaultCell = {
+  rowSpan: 1,
+  colSpan: 1,
+  value: null
 };
 
-export function mergeColumn(data: Data, range?: MergeRange): IndexGraph {
-  warn(range);
-
-  const [indexGraph, valueGraph] = getGraph(data);
-
-  valueGraph.forEach((values, valuesIndex) => {
-    let prevIndex = 0;
-    let prevValue: any;
-    let count = 1;
-
-    values.forEach((value, valueIndex) => {
-      if (!whetherContinue(range, valueIndex)) return;
-
-      if (prevValue === value) {
-        count = count + 1;
-        indexGraph[valuesIndex][prevIndex] = count;
-        indexGraph[valuesIndex][valueIndex] = 0;
-      } else {
-        count = 1;
-        prevIndex = valueIndex;
-      }
-
-      prevValue = value;
-    });
-  });
-
-  return indexGraph;
+export function createCell(): TableCell {
+  return { ...defaultCell };
 }
 
-export function mergeRow(data: Data, range?: MergeRange): IndexGraph {
-  warn(range);
-
-  const [indexGraph, valueGraph] = getGraph(data);
-
-  valueGraph[0].forEach((_, valueIndex) => {
-    let prevIndex = 0;
-    let prevValue: any;
-    let count = 1;
-
-    valueGraph.forEach((values, rowIndex) => {
-      if (!whetherContinue(range, rowIndex)) return;
-
-      const value = values[valueIndex];
-
-      if (prevValue === value) {
-        count = count + 1;
-        indexGraph[prevIndex][valueIndex] = count;
-        indexGraph[rowIndex][valueIndex] = 0;
-      } else {
-        count = 1;
-        prevIndex = rowIndex;
-      }
-
-      prevValue = value;
-    });
-  });
-
-  return indexGraph;
+export function createRow(keys: OptionKeys): TableRow {
+  return Array.from({ length: keys.length }, createCell);
 }
 
-export function whetherContinue(range: MergeRange, index: number): boolean {
-  if (typeof range === 'number' && index < range) return false;
+export function initTable(list: List, keys: OptionKeys): Table {
+  return Array.from({ length: list.length }, () => createRow(keys));
+}
 
-  if (Array.isArray(range)) {
-    let [start, end] = range;
-    if (typeof start === 'number' && index < start) return false;
-    if (typeof end === 'number' && index > end) return false;
+export function setCell(type: SpanTypes, prev: ListItem, current: ListItem) {
+  if (prev.value !== current.value) return;
+
+  current[type] = prev[type] + 1;
+  prev[type] = 0;
+}
+
+export function getRangeStartEnd(table: Table, range: OptionRangeIntact): RangeStartEnd {
+  const { row: rowRange, col: colRange } = range;
+
+  let colStart = 0;
+  let colEnd = table[0].length;
+
+  let rowStart = 0;
+  let rowEnd = table.length;
+
+  if (typeof colRange === 'number') {
+    colStart = colRange;
   }
 
-  return true;
-}
-
-function warn(range: MergeRange) {
-  if (range && typeof range !== 'number' && !Array.isArray(range)) {
-    console.warn('range 不是 number 或 number[]， 为了程序正常运行，range 不生效!');
+  if (Array.isArray(colRange)) {
+    const [s, e] = colRange;
+    colStart = s;
+    colEnd = e;
   }
 
-  if (Array.isArray(range)) {
-    let [start, end] = range;
-    if (typeof start !== 'number' || typeof end !== 'number') {
-      console.warn('range 不是 number[]， 为了程序正常运行，range 不生效!');
-    } else if (start >= end) {
-      console.warn(`range 是 number[]，但是 ${end} 必须大于 ${start}， 为了程序正常运行，range 不生效!`);
+  if (typeof rowRange === 'number') {
+    rowStart = rowRange;
+  }
+
+  if (Array.isArray(rowRange)) {
+    const [s, e] = rowRange;
+    rowStart = s;
+    rowEnd = e;
+  }
+
+  return { rowStart, rowEnd, colStart, colEnd };
+}
+
+export function error(option: Option) {
+  const { keys, range } = option;
+
+  if (keys) {
+    if (!isArray(keys)) {
+      throw new TypeError(KEYS_TYPE_ERROR);
+    }
+
+    if (keys.some((v) => !['string', 'number'].includes(typeof v))) {
+      throw new TypeError(KEYS_TYPE_ERROR);
     }
   }
+
+  if (range) {
+    if (!isObject(range)) {
+      throw new TypeError(RANGE_TYPE_ERROR);
+    }
+
+    const { row, col } = range;
+
+    if ((!isNumber(row) && !isArray(row)) || (!isNumber(col) && !isArray(col))) {
+      throw new TypeError(RANGE_TYPE_ERROR);
+    }
+  }
+}
+
+export function createIntactOption(list: List, option: Option): OptionIntact {
+  error(option);
+
+  const { keys, range = {} } = option;
+
+  return {
+    keys: keys || Object.keys(list[0]),
+    range: {
+      row: range.row || 0,
+      col: range.col || 0
+    }
+  };
+}
+
+export function createTable(list: List, option: Option = {}): Result {
+  const opts = createIntactOption(list, option);
+
+  const { keys, range } = opts;
+  if (!keys) return;
+  if (list.length === 0) return;
+
+  let table = initTable(list, keys);
+
+  const { rowStart, rowEnd, colStart, colEnd } = getRangeStartEnd(table, range);
+
+  table.forEach((row, rowIndex) => {
+    const rowData = list[rowIndex];
+
+    row.forEach((cell, colIndex) => {
+      cell.value = rowData[keys[colIndex]];
+
+      let prevColCell = null;
+      let prevRowCell = null;
+
+      if (colIndex >= colStart && colIndex < colEnd && rowIndex >= rowStart && rowIndex < rowEnd) {
+        if (colIndex > colStart) prevColCell = table[rowIndex][colIndex - 1];
+        if (rowIndex > rowStart) prevRowCell = table[rowIndex - 1][colIndex];
+
+        if (prevColCell !== null) setCell('colSpan', prevColCell, cell);
+        if (prevRowCell !== null) setCell('rowSpan', prevRowCell, cell);
+      }
+    });
+  });
+
+  return table;
+}
+
+export function getTableMerged(table: Result, type: SpanTypes) {
+  if (!table) return;
+
+  return table.map((row) => row.map((cell) => cell[type]));
 }

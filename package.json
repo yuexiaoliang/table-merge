@@ -5,6 +5,7 @@
     "preview:el": "vite examples/element-plus --config vite.config.ts",
     "preview:antdv": "vite examples/ant-design-vue --config vite.config.ts",
     "test": "vitest",
+    "test:watch": "vitest watch",
     "coverage": "vitest run --coverage",
     "build": "pnpm run -r build",
     "build:core": "pnpm --filter @table-merge/core build"

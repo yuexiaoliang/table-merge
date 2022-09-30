@@ -1,185 +1,169 @@
 import { test, expect, describe } from 'vitest';
-
-import { getGraph, mergeColumn, mergeRow, whetherContinue } from './index';
+import { getTableMerged, error, initTable, createTable, createCell, createRow, defaultCell, getRangeStartEnd } from './index';
+import { KEYS_TYPE_ERROR, RANGE_TYPE_ERROR } from './constants';
 
 const data = [
-  { a: 8, b: 8, c: 2, d: 0 },
-  { a: 2, b: 4, c: 4, d: 5 },
-  { a: 8, b: 8, c: 4, d: 4 },
-  { a: 5, b: 8, c: 4, d: 4 },
-  { a: 5, b: 3, c: 3, d: 3 }
+  { id: 1, a: 0, b: 1, c: 1, d: 0, e: 0 },
+  { id: 2, a: 1, b: 0, c: 0, d: 0, e: 1 },
+  { id: 3, a: 0, b: 0, c: 0, d: 1, e: 1 },
+  { id: 4, a: 0, b: 1, c: 0, d: 1, e: 1 },
+  { id: 5, a: 0, b: 0, c: 0, d: 1, e: 1 },
+  { id: 6, a: 1, b: 1, c: 1, d: 0, e: 0 },
+  { id: 7, a: 1, b: 0, c: 0, d: 0, e: 0 },
+  { id: 8, a: 1, b: 1, c: 0, d: 0, e: 0 }
 ];
 
-describe('getGraph', () => {
-  test('utils => getGraph', () => {
-    const indexGraph = [
-      [1, 1, 1, 1],
-      [1, 1, 1, 1],
-      [1, 1, 1, 1],
-      [1, 1, 1, 1],
-      [1, 1, 1, 1]
-    ];
-    const valueGraph = [
-      [8, 8, 2, 0],
-      [2, 4, 4, 5],
-      [8, 8, 4, 4],
-      [5, 8, 4, 4],
-      [5, 3, 3, 3]
-    ];
-    expect(getGraph(data)).toEqual([indexGraph, valueGraph]);
+const keys = ['a', 'b', 'c', 'd', 'e'];
+
+describe('error', () => {
+  test('option.keys 类型错误', () => {
+    // @ts-ignore
+    expect(() => error({ keys: 123 })).toThrowError(KEYS_TYPE_ERROR);
+
+    // @ts-ignore
+    expect(() => error({ keys: [123, null] })).toThrowError(KEYS_TYPE_ERROR);
+  });
+
+  test('option.range 类型错误', () => {
+    // @ts-ignore
+    expect(() => error({ range: 'abc' })).toThrowError(RANGE_TYPE_ERROR);
+
+    expect(() =>
+      error({
+        // @ts-ignore
+        range: { col: 'abc', row: 2 }
+      })
+    ).toThrowError(RANGE_TYPE_ERROR);
   });
 });
 
-describe('methods => whetherContinue', () => {
-  test('Number', () => {
-    const result = whetherContinue(3, 5);
-    expect(result).toBeTruthy();
+describe('initTable', () => {
+  const row = keys.map(() => ({ ...defaultCell }));
+
+  test('initTable => createCell', () => {
+    expect(createCell()).toEqual({ ...defaultCell });
   });
 
-  test('Array', () => {
-    const result = whetherContinue([2, 5], 5);
-    expect(result).toBeTruthy();
-  });
-});
-
-describe('methods => mergeRow', () => {
-  test('Default', () => {
-    const result = [
-      [1, 1, 1, 1],
-      [1, 1, 3, 1],
-      [1, 2, 0, 2],
-      [2, 0, 0, 0],
-      [0, 1, 1, 1]
-    ];
-    expect(mergeRow(data)).toEqual(result);
+  test('initTable => createRow', () => {
+    expect(createRow(keys)).toEqual([...row]);
   });
 
-  test('Number', () => {
-    const result1 = [
-      [1, 1, 1, 1],
-      [1, 1, 3, 1],
-      [1, 2, 0, 2],
-      [2, 0, 0, 0],
-      [0, 1, 1, 1]
-    ];
-    expect(mergeRow(data, 1)).toEqual(result1);
-
-    const result2 = [
-      [1, 1, 1, 1],
-      [1, 1, 1, 1],
-      [1, 2, 2, 2],
-      [2, 0, 0, 0],
-      [0, 1, 1, 1]
-    ];
-    expect(mergeRow(data, 2)).toEqual(result2);
-
-    const result3 = [
-      [1, 1, 1, 1],
-      [1, 1, 1, 1],
-      [1, 1, 1, 1],
-      [2, 1, 1, 1],
-      [0, 1, 1, 1]
-    ];
-    expect(mergeRow(data, 3)).toEqual(result3);
-  });
-
-  test('Array', () => {
-    const result1 = [
-      [1, 1, 1, 1],
-      [1, 1, 2, 1],
-      [1, 1, 0, 1],
-      [1, 1, 1, 1],
-      [1, 1, 1, 1]
-    ];
-    expect(mergeRow(data, [1, 2])).toEqual(result1);
-
-    const result2 = [
-      [1, 1, 1, 1],
-      [1, 1, 1, 1],
-      [1, 2, 2, 2],
-      [1, 0, 0, 0],
-      [1, 1, 1, 1]
-    ];
-    expect(mergeRow(data, [2, 3])).toEqual(result2);
-
-    const result3 = [
-      [1, 1, 1, 1],
-      [1, 1, 1, 1],
-      [1, 2, 2, 2],
-      [2, 0, 0, 0],
-      [0, 1, 1, 1]
-    ];
-    expect(mergeRow(data, [2, 4])).toEqual(result3);
+  test('initTable => initTable', () => {
+    expect(initTable(data, keys)).toEqual(data.map(() => row));
   });
 });
 
-describe('methods => mergeColumn', () => {
-  test('default', () => {
-    const result = [
-      [2, 0, 1, 1],
-      [1, 2, 0, 1],
-      [2, 0, 2, 0],
-      [1, 1, 2, 0],
-      [1, 3, 0, 0]
-    ];
-    expect(mergeColumn(data)).toEqual(result);
+describe('getRangeStartEnd', () => {
+  test('option.range = {row: 3, col: 2}', () => {
+    let table = initTable(data, keys);
+    expect(getRangeStartEnd(table, { row: 3, col: 2 })).toEqual({ rowStart: 3, rowEnd: 8, colStart: 2, colEnd: 5 });
   });
 
-  test('Number', () => {
-    const result1 = [
-      [1, 1, 1, 1],
-      [1, 2, 0, 1],
-      [1, 1, 2, 0],
-      [1, 1, 2, 0],
-      [1, 3, 0, 0]
-    ];
-    expect(mergeColumn(data, 1)).toEqual(result1);
+  test('option.range = {row: [2, 7], col: [0, 4]}', () => {
+    let table = initTable(data, keys);
+    expect(getRangeStartEnd(table, { row: [2, 7], col: [0, 4] })).toEqual({ rowStart: 2, rowEnd: 7, colStart: 0, colEnd: 4 });
+  });
+});
 
-    const result2 = [
-      [1, 1, 1, 1],
-      [1, 1, 1, 1],
-      [1, 1, 2, 0],
-      [1, 1, 2, 0],
-      [1, 1, 2, 0]
-    ];
-    expect(mergeColumn(data, 2)).toEqual(result2);
+describe('createTable', () => {
+  test('只传 data', () => {
+    const table = createTable(data);
+    expect(getTableMerged(table, 'colSpan')).toEqual([
+      [1, 1, 0, 2, 0, 2],
+      [1, 1, 0, 0, 3, 1],
+      [1, 0, 0, 3, 0, 2],
+      [1, 1, 1, 1, 0, 2],
+      [1, 0, 0, 3, 0, 2],
+      [1, 0, 0, 3, 0, 2],
+      [1, 1, 0, 0, 0, 4],
+      [1, 0, 2, 0, 0, 3]
+    ]);
 
-    const result3 = [
-      [1, 1, 1, 1],
-      [1, 1, 1, 1],
-      [1, 1, 1, 1],
-      [1, 1, 1, 1],
-      [1, 1, 1, 1]
-    ];
-    expect(mergeColumn(data, 3)).toEqual(result3);
+    expect(getTableMerged(table, 'rowSpan')).toEqual([
+      [1, 1, 1, 1, 0, 1],
+      [1, 1, 0, 0, 2, 0],
+      [1, 0, 2, 0, 0, 0],
+      [1, 0, 1, 0, 0, 0],
+      [1, 3, 1, 4, 3, 4],
+      [1, 0, 1, 1, 0, 0],
+      [1, 0, 1, 0, 0, 0],
+      [1, 3, 1, 2, 3, 3]
+    ]);
   });
 
-  test('Array', () => {
-    const result1 = [
-      [1, 1, 1, 1],
-      [1, 2, 0, 1],
-      [1, 1, 1, 1],
-      [1, 1, 1, 1],
-      [1, 2, 0, 1]
-    ];
-    expect(mergeColumn(data, [1, 2])).toEqual(result1);
+  test(`options = { keys: ['a', 'b', 'c', 'd', 'e']}`, () => {
+    const table = createTable(data, { keys });
+    expect(getTableMerged(table, 'colSpan')).toEqual([
+      [1, 0, 2, 0, 2],
+      [1, 0, 0, 3, 1],
+      [0, 0, 3, 0, 2],
+      [1, 1, 1, 0, 2],
+      [0, 0, 3, 0, 2],
+      [0, 0, 3, 0, 2],
+      [1, 0, 0, 0, 4],
+      [0, 2, 0, 0, 3]
+    ]);
+    expect(getTableMerged(table, 'rowSpan')).toEqual([
+      [1, 1, 1, 0, 1],
+      [1, 0, 0, 2, 0],
+      [0, 2, 0, 0, 0],
+      [0, 1, 0, 0, 0],
+      [3, 1, 4, 3, 4],
+      [0, 1, 1, 0, 0],
+      [0, 1, 0, 0, 0],
+      [3, 1, 2, 3, 3]
+    ]);
+  });
 
-    const result2 = [
-      [1, 1, 1, 1],
-      [1, 1, 1, 1],
-      [1, 1, 2, 0],
-      [1, 1, 2, 0],
-      [1, 1, 2, 0]
-    ];
-    expect(mergeColumn(data, [2, 3])).toEqual(result2);
+  test(`options = { keys: ['a', 'b', 'c', 'd', 'e'], range: { row: 3, col: 2 }}`, () => {
+    const table = createTable(data, { keys, range: { row: 3, col: 2 } });
 
-    const result3 = [
-      [1, 1, 1, 1],
-      [1, 1, 1, 1],
-      [1, 1, 2, 0],
-      [1, 1, 2, 0],
-      [1, 1, 2, 0]
-    ];
-    expect(mergeColumn(data, [2, 4])).toEqual(result3);
+    expect(getTableMerged(table, 'colSpan')).toEqual([
+      [1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1],
+      [1, 1, 1, 0, 2],
+      [1, 1, 1, 0, 2],
+      [1, 1, 1, 0, 2],
+      [1, 1, 0, 0, 3],
+      [1, 1, 0, 0, 3]
+    ]);
+
+    expect(getTableMerged(table, 'rowSpan')).toEqual([
+      [1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1],
+      [1, 1, 0, 0, 0],
+      [1, 1, 2, 2, 2],
+      [1, 1, 1, 0, 0],
+      [1, 1, 0, 0, 0],
+      [1, 1, 2, 3, 3]
+    ]);
+  });
+
+  test(`options = { keys: ['a', 'b', 'c', 'd', 'e'], range: { row: [1, 4], col: [2, 5] }}`, () => {
+    const table = createTable(data, { keys, range: { row: [2, 6], col: [1, 4] } });
+
+    expect(getTableMerged(table, 'colSpan')).toEqual([
+      [1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1],
+      [1, 0, 2, 1, 1],
+      [1, 1, 1, 1, 1],
+      [1, 0, 2, 1, 1],
+      [1, 0, 2, 1, 1],
+      [1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1]
+    ]);
+
+    expect(getTableMerged(table, 'rowSpan')).toEqual([
+      [1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1],
+      [1, 1, 0, 0, 1],
+      [1, 1, 0, 0, 1],
+      [1, 1, 3, 3, 1],
+      [1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1]
+    ]);
   });
 });
