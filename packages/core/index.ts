@@ -1,4 +1,4 @@
-import { KEYS_TYPE_ERROR, RANGE_TYPE_ERROR } from './constants';
+import { KEYS_TYPE_ERROR, RANGE_TYPE_ERROR, TABLE_MERGED_ERROR } from './constants';
 import { isArray, isObject, isNumber } from './utils';
 
 type RangeValue = number | [number, number];
@@ -178,8 +178,19 @@ export function createTable(list: List, option: Option = {}): Result {
   return table;
 }
 
-export function getTableMerged(table: Result, type: SpanTypes) {
+export function getTableMerged(table: Result, type?: SpanTypes) {
   if (!table) return;
 
-  return table.map((row) => row.map((cell) => cell[type]));
+  if (type) {
+    if (type !== 'rowSpan' && type !== 'colSpan') {
+      throw new TypeError(TABLE_MERGED_ERROR);
+    }
+    return table.map((row) => row.map((cell) => cell[type]));
+  }
+
+  return table.map((row) =>
+    row.map((cell) => {
+      return [cell['rowSpan'], cell['colSpan']];
+    })
+  );
 }

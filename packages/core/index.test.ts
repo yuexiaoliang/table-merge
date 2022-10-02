@@ -1,6 +1,6 @@
 import { test, expect, describe } from 'vitest';
 import { getTableMerged, error, initTable, createTable, createCell, createRow, defaultCell, getRangeStartEnd } from './index';
-import { KEYS_TYPE_ERROR, RANGE_TYPE_ERROR } from './constants';
+import { KEYS_TYPE_ERROR, RANGE_TYPE_ERROR, TABLE_MERGED_ERROR } from './constants';
 
 const data = [
   { id: 1, a: 0, b: 1, c: 1, d: 0, e: 0 },
@@ -93,6 +93,13 @@ describe('createTable', () => {
 
   test(`options = { keys: ['a', 'b', 'c', 'd', 'e']}`, () => {
     const table = createTable(data, { keys });
+
+    // @ts-ignore
+    expect(() => getTableMerged(table, 'abc')).toThrowError(TABLE_MERGED_ERROR);
+  });
+
+  test(`options = { keys: ['a', 'b', 'c', 'd', 'e']}`, () => {
+    const table = createTable(data, { keys });
     expect(getTableMerged(table, 'colSpan')).toEqual([
       [1, 0, 2, 0, 2],
       [1, 0, 0, 3, 1],
@@ -164,6 +171,69 @@ describe('createTable', () => {
       [1, 1, 1, 1, 1],
       [1, 1, 1, 1, 1],
       [1, 1, 1, 1, 1]
+    ]);
+  });
+
+  test(`options = { keys: ['a', 'b', 'c', 'd', 'e'], range: { row: [1, 4], col: [2, 5] }}`, () => {
+    const table = createTable(data, { keys, range: { row: [2, 6], col: [1, 4] } });
+
+    expect(getTableMerged(table)).toEqual([
+      [
+        [1, 1],
+        [1, 1],
+        [1, 1],
+        [1, 1],
+        [1, 1]
+      ],
+      [
+        [1, 1],
+        [1, 1],
+        [1, 1],
+        [1, 1],
+        [1, 1]
+      ],
+      [
+        [1, 1],
+        [1, 0],
+        [0, 2],
+        [0, 1],
+        [1, 1]
+      ],
+      [
+        [1, 1],
+        [1, 1],
+        [0, 1],
+        [0, 1],
+        [1, 1]
+      ],
+      [
+        [1, 1],
+        [1, 0],
+        [3, 2],
+        [3, 1],
+        [1, 1]
+      ],
+      [
+        [1, 1],
+        [1, 0],
+        [1, 2],
+        [1, 1],
+        [1, 1]
+      ],
+      [
+        [1, 1],
+        [1, 1],
+        [1, 1],
+        [1, 1],
+        [1, 1]
+      ],
+      [
+        [1, 1],
+        [1, 1],
+        [1, 1],
+        [1, 1],
+        [1, 1]
+      ]
     ]);
   });
 });
