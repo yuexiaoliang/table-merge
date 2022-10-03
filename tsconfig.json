@@ -19,7 +19,8 @@
   "include": [
     "packages",
     "*.ts",
-    "*.d.ts"
+    "*.d.ts",
+    "types/**/*.d.ts"
   ],
   "references": [
     {

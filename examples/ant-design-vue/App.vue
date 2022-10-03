@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { tableMergeAntDesignVue } from 'table-merge';
+// import { tableMergeAntDesignVue } from 'table-merge';
 // or
-// import tableMergeAntDesignVue from '@table-merge/ant-design-vue';
+import tableMergeAntDesignVue from '@table-merge/ant-design-vue';
 
 import { data, columns } from '../mock';
 
-const _col = columns.map((col) => {
+const cols = columns.map((col) => {
   return {
     title: col.label,
     dataIndex: col.prop,
@@ -13,13 +13,20 @@ const _col = columns.map((col) => {
   };
 });
 
-const columnsRow = tableMergeAntDesignVue(data, _col, 'row');
-const columnsRow2 = tableMergeAntDesignVue(data, _col, 'row', 2);
-const columnsRow1_2 = tableMergeAntDesignVue(data, _col, 'row', [1, 2]);
+const columnsRow = tableMergeAntDesignVue(data, cols, {});
+const columnsRow2 = tableMergeAntDesignVue(data, cols, { range: { row: 2 } });
+const columnsRow1_3 = tableMergeAntDesignVue(data, cols, { range: { row: [1, 3] } });
 
-const columnsCol = tableMergeAntDesignVue(data, _col);
-const columnsCol2 = tableMergeAntDesignVue(data, _col, 'column', 2);
-const columnsCol1_2 = tableMergeAntDesignVue(data, _col, 'column', [1, 2]);
+const columnsCol = tableMergeAntDesignVue(data, cols, {}, 'colSpan');
+const columnsCol2 = tableMergeAntDesignVue(data, cols, { range: { col: 2 } }, 'colSpan');
+const columnsCol1_3 = tableMergeAntDesignVue(data, cols, { range: { col: [1, 3] } }, 'colSpan');
+
+const mergeColFilter = tableMergeAntDesignVue(
+  data,
+  cols.filter((col) => col.dataIndex !== 'id'),
+  { keys: ['a', 'b', 'c', 'd'] },
+  'colSpan'
+);
 </script>
 
 <template>
@@ -34,8 +41,8 @@ const columnsCol1_2 = tableMergeAntDesignVue(data, _col, 'column', [1, 2]);
   </div>
 
   <div class="box">
-    <div class="box__title">多行合并-指定范围-[1-2]</div>
-    <a-table :dataSource="data" :columns="columnsRow1_2" :pagination="false" bordered />
+    <div class="box__title">多行合并-指定范围-[1-3]</div>
+    <a-table :dataSource="data" :columns="columnsRow1_3" :pagination="false" bordered />
   </div>
 
   <div class="box">
@@ -49,8 +56,13 @@ const columnsCol1_2 = tableMergeAntDesignVue(data, _col, 'column', [1, 2]);
   </div>
 
   <div class="box">
-    <div class="box__title">多列合并-指定范围-[1-2]</div>
-    <a-table :dataSource="data" :columns="columnsCol1_2" :pagination="false" bordered />
+    <div class="box__title">多列合并-指定范围-[1-3]</div>
+    <a-table :dataSource="data" :columns="columnsCol1_3" :pagination="false" bordered />
+  </div>
+
+  <div class="box">
+    <div class="box__title">指定列</div>
+    <a-table :dataSource="data" :columns="mergeColFilter" :pagination="false" bordered />
   </div>
 </template>
 

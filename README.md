@@ -22,7 +22,7 @@
 
 参考：[packages/ant-design-vue/index.ts](https://github.com/yuexiaoliang/table-merge/blob/master/packages/ant-design-vue/index.ts) 或 [packages/element-plus/index.ts](https://github.com/yuexiaoliang/table-merge/blob/master/packages/element-plus/index.ts)
 
-- [ ] Element
+- [ ] Element-UI
 
 - [ ] Ant Design
 
@@ -38,6 +38,6 @@
 
 - [ ] 整合示例项目
 
-- [ ] 代码重构优化
+- [x] 代码重构优化
 
-- [ ] 算法优化
+- [x] 算法优化

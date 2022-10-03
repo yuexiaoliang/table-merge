@@ -1,20 +1,30 @@
 <script setup lang="ts">
-import { tableMergeElementPlus } from 'table-merge';
+// import { tableMergeElementPlus } from 'table-merge';
 // or
-// import tableMergeElementPlus from '@table-merge/element-plus';
+import tableMergeElementPlus from '@table-merge/element-plus';
 
-import { data, columns } from '../mock.js';
+// @ts-ignore
+import { data, columns } from '../mock';
 
-const mergeCol = tableMergeElementPlus(data);
-const mergeCol2 = tableMergeElementPlus(data, 'column', 2);
-const mergeCol1_2 = tableMergeElementPlus(data, 'column', [1, 2]);
+const mergeRow = tableMergeElementPlus(data);
+const mergeRow2 = tableMergeElementPlus(data, { range: { row: 2 } });
+const mergeRow1_3 = tableMergeElementPlus(data, { range: { row: [1, 3] } });
 
-const mergeRow = tableMergeElementPlus(data, 'row');
-const mergeRow2 = tableMergeElementPlus(data, 'row', 2);
-const mergeRow1_2 = tableMergeElementPlus(data, 'row', [1, 2]);
+const mergeCol = tableMergeElementPlus(data, null, 'colSpan');
+const mergeCol2 = tableMergeElementPlus(data, { range: { col: 2 } }, 'colSpan');
+const mergeCol1_3 = tableMergeElementPlus(data, { range: { col: [1, 3] } }, 'colSpan');
+
+const mergeColFilter = tableMergeElementPlus(data, { keys: ['a', 'b', 'c', 'd'] }, 'colSpan');
 </script>
 
 <template>
+  <div class="box">
+    <div class="box__title">指定列</div>
+    <el-table ref="table" :data="data" :span-method="mergeColFilter" border style="width: 100%">
+      <el-table-column v-for="col in columns.filter((col) => col.prop !== 'id')" :key="col.prop" :prop="col.prop" :label="col.label" align="center" />
+    </el-table>
+  </div>
+
   <div class="box">
     <div class="box__title">多行合并</div>
     <el-table ref="table" :data="data" :span-method="mergeRow" border style="width: 100%">
@@ -30,8 +40,8 @@ const mergeRow1_2 = tableMergeElementPlus(data, 'row', [1, 2]);
   </div>
 
   <div class="box">
-    <div class="box__title">多行合并-指定范围-[1-2]</div>
-    <el-table ref="table" :data="data" :span-method="mergeRow1_2" border style="width: 100%">
+    <div class="box__title">多行合并-指定范围-[1-3]</div>
+    <el-table ref="table" :data="data" :span-method="mergeRow1_3" border style="width: 100%">
       <el-table-column v-for="col in columns" :key="col.prop" :prop="col.prop" :label="col.label" align="center" />
     </el-table>
   </div>
@@ -51,8 +61,8 @@ const mergeRow1_2 = tableMergeElementPlus(data, 'row', [1, 2]);
   </div>
 
   <div class="box">
-    <div class="box__title">多列合并-指定范围-[1-2]</div>
-    <el-table ref="table" :data="data" :span-method="mergeCol1_2" border style="width: 100%">
+    <div class="box__title">多列合并-指定范围-[1-3]</div>
+    <el-table ref="table" :data="data" :span-method="mergeCol1_3" border style="width: 100%">
       <el-table-column v-for="col in columns" :key="col.prop" :prop="col.prop" :label="col.label" align="center" />
     </el-table>
   </div>

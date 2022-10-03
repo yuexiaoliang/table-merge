@@ -1,21 +1,28 @@
-import { mergeColumn, mergeRow } from '@table-merge/core';
-import type { MergeRange } from '@table-merge/core';
+import { createTableMerge, getTableMerged } from '@table-merge/core';
+import type { TableMergeOptions } from '@table-merge/core';
 
 interface SpanMethodProps {
   rowIndex: number;
   columnIndex: number;
 }
 
-export default (data: any[], options: string = 'column', range?: MergeRange) => {
+export default (data: any[], options?: TableMergeOptions, spanType: SpanTypes = 'rowSpan') => {
+  const table = createTableMerge(data, options);
+  const merged = getTableMerged(table, spanType);
+  if (!merged) return;
+
   return ({ rowIndex, columnIndex }: SpanMethodProps) => {
-    const col = mergeColumn(data, range);
-    const row = mergeRow(data, range);
+    let rowspan = 1;
+    let colspan = 1;
 
-    const result = {
-      rowspan: options === 'row' ? row[rowIndex][columnIndex] : 1,
-      colspan: options === 'column' ? col[rowIndex][columnIndex] : 1
-    };
+    if (spanType === 'rowSpan') {
+      rowspan = merged[rowIndex][columnIndex];
+    }
 
-    return result;
+    if (spanType === 'colSpan') {
+      colspan = merged[rowIndex][columnIndex];
+    }
+
+    return { rowspan, colspan };
   };
 };
