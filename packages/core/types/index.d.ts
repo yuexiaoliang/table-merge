@@ -1,44 +1,44 @@
-declare type RangeValue = number | [number, number];
+export type RangeValue = number | [number, number];
 
-declare type OptionsKeys = (string | number)[];
+export type OptionsKeys = (string | number)[];
 
-declare interface OptionsRange {
+export interface OptionsRange {
   row?: RangeValue;
   col?: RangeValue;
 }
 
-declare interface UserOptions {
+export interface UserOptions {
   keys?: OptionsKeys;
   range?: OptionsRange;
 }
 
-declare interface OptionsResolved {
+export interface OptionsResolved {
   keys: OptionsKeys;
   range: Required<OptionsRange>;
 }
 
-declare interface ListItem {
+export interface ListItem {
   [key: string]: any;
 }
 
-declare type TableData = ListItem[];
+export type TableData = ListItem[];
 
-declare interface TableCell {
+export interface TableCell {
   rowSpan: number;
   colSpan: number;
   value: any;
 }
 
-declare type TableRow = TableCell[];
-declare type Table = TableRow[];
+export type TableRow = TableCell[];
+export type Table = TableRow[];
 
-declare type CreateTableResult = Table | null | undefined;
+export type CreateTableResult = Table | null | undefined;
 
-declare interface RangeStartEnd {
+export interface RangeStartEnd {
   rowStart: number;
   rowEnd: number;
   colStart: number;
   colEnd: number;
 }
 
-declare type SpanTypes = keyof Omit<TableCell, 'value'>;
+export type SpanTypes = keyof Omit<TableCell, 'value'>;

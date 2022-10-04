@@ -1,5 +1,5 @@
 import { createTableMerge, getTableMerged } from '@table-merge/core';
-import type { TableMergeOptions } from '@table-merge/core';
+import type { TableMergeOptions, TableMergeSpanTypes } from '@table-merge/core';
 
 interface SpanMethodProps {
   rowIndex: number;
@@ -7,7 +7,7 @@ interface SpanMethodProps {
 }
 
 export interface TableMergeElementPlusOptions extends TableMergeOptions {
-  spanType?: SpanTypes;
+  spanType?: TableMergeSpanTypes;
 }
 
 export default (data: any[], options?: TableMergeElementPlusOptions) => {

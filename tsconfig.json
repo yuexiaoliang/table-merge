@@ -17,10 +17,8 @@
     "skipLibCheck": true
   },
   "include": [
-    "packages",
-    "*.ts",
-    "*.d.ts",
-    "types/**/*.d.ts"
+    "**/**/*.ts",
+    "**/**/*.d.ts"
   ],
   "references": [
     {

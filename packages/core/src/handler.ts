@@ -1,3 +1,4 @@
+import { TableData, UserOptions, CreateTableResult, TableCell, SpanTypes } from '../types';
 import { getRangeStartEnd } from './functional';
 import { initOptions, initTable } from './init';
 

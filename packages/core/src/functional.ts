@@ -1,3 +1,4 @@
+import { CreateTableResult, ListItem, OptionsRange, RangeStartEnd, SpanTypes, Table } from '../types';
 import { TABLE_MERGED_ERROR } from './constants';
 
 export function getTableMerged(table: CreateTableResult): number[][][] | null;

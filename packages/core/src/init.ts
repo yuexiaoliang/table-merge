@@ -1,3 +1,4 @@
+import { TableData, OptionsKeys, Table, TableCell, TableRow, UserOptions, OptionsResolved } from '../types';
 import { KEYS_TYPE_ERROR, RANGE_TYPE_ERROR } from './constants';
 import { isArray, isObject, isNumber } from './utils';
 

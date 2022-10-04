@@ -3,7 +3,13 @@ import dts from 'vite-plugin-dts';
 
 export default (name: string) =>
   defineConfig({
-    plugins: [dts()],
+    plugins: [
+      dts({
+        skipDiagnostics: false,
+        logDiagnostics: true,
+        insertTypesEntry: true
+      })
+    ],
     build: {
       lib: {
         entry: 'index.ts',
