@@ -1,6 +1,4 @@
 <script setup lang="ts">
-// import { tableMergeAntDesignVue } from 'table-merge';
-// or
 import tableMergeAntDesignVue from '@table-merge/ant-design-vue';
 
 const data = [
@@ -21,7 +19,7 @@ const cols = [
 </script>
 
 <template>
-  <h1 class="title">@table-merge/ant-design-vue</h1>
+  <h1 class="title">@table-merge/ant-design-vue example</h1>
 
   <h2 class="box">合并行</h2>
 

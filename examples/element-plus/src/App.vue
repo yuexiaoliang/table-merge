@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-// import { tableMergeElementPlus } from 'table-merge';
-// or
 import tableMergeElementPlus from '@table-merge/element-plus';
 
 const data = [
