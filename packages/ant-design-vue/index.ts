@@ -1,8 +1,14 @@
 import { createTableMerge, getTableMerged } from '@table-merge/core';
 import type { TableMergeOptions } from '@table-merge/core';
 
-export default (data: any[], columns: any[], options: TableMergeOptions, spanType: SpanTypes = 'rowSpan') => {
-  const table = createTableMerge(data, options);
+export interface TableMergeAntDesignVueOptions extends TableMergeOptions {
+  spanType?: SpanTypes;
+}
+
+export default (data: any[], columns: any[], options?: TableMergeAntDesignVueOptions) => {
+  const { spanType = 'rowSpan', keys, range } = options || {};
+
+  const table = createTableMerge(data, { keys, range });
   const merged = getTableMerged(table);
   if (!merged) return;
 
@@ -10,9 +16,10 @@ export default (data: any[], columns: any[], options: TableMergeOptions, spanTyp
     return {
       ...col,
       customCell(_: any, rowIndex: number) {
+        const cell = merged[rowIndex][colIndex];
         const result = {
-          rowSpan: spanType === 'rowSpan' ? merged[rowIndex][colIndex][0] : 1,
-          colSpan: spanType === 'colSpan' ? merged[rowIndex][colIndex][1] : 1
+          rowSpan: spanType === 'rowSpan' ? cell[0] : 1,
+          colSpan: spanType === 'colSpan' ? cell[1] : 1
         };
         return result;
       }
