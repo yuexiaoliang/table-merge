@@ -1,80 +1,140 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 // import { tableMergeElementPlus } from 'table-merge';
 // or
 import tableMergeElementPlus from '@table-merge/element-plus';
 
-// @ts-ignore
-import { data, columns } from '../mock';
+const data = [
+  { id: 1, a: 8, b: 8, c: 2, d: 0 },
+  { id: 2, a: 2, b: 4, c: 4, d: 5 },
+  { id: 3, a: 8, b: 8, c: 4, d: 4 },
+  { id: 4, a: 5, b: 8, c: 4, d: 1 },
+  { id: 5, a: 5, b: 3, c: 3, d: 2 }
+];
 
-const mergeRow = tableMergeElementPlus(data);
-const mergeRow2 = tableMergeElementPlus(data, { range: { row: 2 } });
-const mergeRow1_3 = tableMergeElementPlus(data, { range: { row: [1, 3] } });
-
-const mergeCol = tableMergeElementPlus(data, null, 'colSpan');
-const mergeCol2 = tableMergeElementPlus(data, { range: { col: 2 } }, 'colSpan');
-const mergeCol1_3 = tableMergeElementPlus(data, { range: { col: [1, 3] } }, 'colSpan');
-
-const mergeColFilter = tableMergeElementPlus(data, { keys: ['a', 'b', 'c', 'd'] }, 'colSpan');
+const columns = [
+  { prop: 'id', label: 'ID', align: 'center' },
+  { prop: 'a', label: 'A列', align: 'center' },
+  { prop: 'b', label: 'B列', align: 'center' },
+  { prop: 'c', label: 'C列', align: 'center' },
+  { prop: 'd', label: 'D列', align: 'center' }
+];
 </script>
 
 <template>
+  <h1 class="title">@table-merge/element-plus</h1>
+
+  <h2 class="box">合并行</h2>
+
   <div class="box">
-    <div class="box__title">指定列</div>
-    <el-table ref="table" :data="data" :span-method="mergeColFilter" border style="width: 100%">
-      <el-table-column v-for="col in columns.filter((col) => col.prop !== 'id')" :key="col.prop" :prop="col.prop" :label="col.label" align="center" />
+    <p>多行合并</p>
+    <pre>tableMergeElementPlus(data)</pre>
+    <el-table :data="data" :span-method="tableMergeElementPlus(data)" border>
+      <el-table-column v-for="col in columns" :key="col.prop" v-bind="col" />
     </el-table>
   </div>
 
   <div class="box">
-    <div class="box__title">多行合并</div>
-    <el-table ref="table" :data="data" :span-method="mergeRow" border style="width: 100%">
-      <el-table-column v-for="col in columns" :key="col.prop" :prop="col.prop" :label="col.label" align="center" />
+    <p>从第二行开始合并</p>
+    <pre>tableMergeElementPlus(data, { range: { row: 2 } })</pre>
+    <el-table :data="data" :span-method="tableMergeElementPlus(data, { range: { row: 2 } })" border>
+      <el-table-column v-for="col in columns" :key="col.prop" v-bind="col" />
     </el-table>
   </div>
 
   <div class="box">
-    <div class="box__title">多行合并-指定开始位置-2</div>
-    <el-table ref="table" :data="data" :span-method="mergeRow2" border style="width: 100%">
-      <el-table-column v-for="col in columns" :key="col.prop" :prop="col.prop" :label="col.label" align="center" />
+    <p>合并 1 - 3 行，不包含第 3 行</p>
+    <pre>tableMergeElementPlus(data, { range: { row: [1, 3] } })</pre>
+    <el-table :data="data" :span-method="tableMergeElementPlus(data, { range: { row: [1, 3] } })" border>
+      <el-table-column v-for="col in columns" :key="col.prop" v-bind="col" />
     </el-table>
   </div>
 
   <div class="box">
-    <div class="box__title">多行合并-指定范围-[1-3]</div>
-    <el-table ref="table" :data="data" :span-method="mergeRow1_3" border style="width: 100%">
-      <el-table-column v-for="col in columns" :key="col.prop" :prop="col.prop" :label="col.label" align="center" />
+    <p>从第一行和第二例开始合并</p>
+    <pre>tableMergeElementPlus(data, { range: { row: 1, col: 2 } })</pre>
+    <el-table :data="data" :span-method="tableMergeElementPlus(data, { range: { row: 1, col: 2 } })" border>
+      <el-table-column v-for="col in columns" :key="col.prop" v-bind="col" />
+    </el-table>
+  </div>
+
+  <h2 class="box">合并列</h2>
+
+  <div class="box">
+    <p>多列合并</p>
+    <pre>tableMergeElementPlus(data, { spanType: 'colSpan' })</pre>
+    <el-table :data="data" :span-method="tableMergeElementPlus(data, { spanType: 'colSpan' })" border>
+      <el-table-column v-for="col in columns" :key="col.prop" v-bind="col" />
     </el-table>
   </div>
 
   <div class="box">
-    <div class="box__title">多列合并</div>
-    <el-table ref="table" :data="data" :span-method="mergeCol" border style="width: 100%">
-      <el-table-column v-for="col in columns" :key="col.prop" :prop="col.prop" :label="col.label" align="center" />
+    <p>从第二列开始合并</p>
+    <pre>tableMergeElementPlus(data, { range: { col: 2 }, spanType: 'colSpan' })</pre>
+    <el-table :data="data" :span-method="tableMergeElementPlus(data, { range: { col: 2 }, spanType: 'colSpan' })" border>
+      <el-table-column v-for="col in columns" :key="col.prop" v-bind="col" />
     </el-table>
   </div>
 
   <div class="box">
-    <div class="box__title">多列合并-指定开始位置-2</div>
-    <el-table ref="table" :data="data" :span-method="mergeCol2" border style="width: 100%">
-      <el-table-column v-for="col in columns" :key="col.prop" :prop="col.prop" :label="col.label" align="center" />
+    <p>合并 1 - 3 列，不包含第 3 列</p>
+    <pre>tableMergeElementPlus(data, { range: { col: [1, 3] }, spanType: 'colSpan' })</pre>
+    <el-table :data="data" :span-method="tableMergeElementPlus(data, { range: { col: [1, 3] }, spanType: 'colSpan' })" border>
+      <el-table-column v-for="col in columns" :key="col.prop" v-bind="col" />
     </el-table>
   </div>
 
   <div class="box">
-    <div class="box__title">多列合并-指定范围-[1-3]</div>
-    <el-table ref="table" :data="data" :span-method="mergeCol1_3" border style="width: 100%">
-      <el-table-column v-for="col in columns" :key="col.prop" :prop="col.prop" :label="col.label" align="center" />
+    <p>从第一行和第二例开始合并</p>
+    <pre>tableMergeElementPlus(data, { range: { row: 1, col: 2 }, spanType: 'colSpan' })</pre>
+    <el-table :data="data" :span-method="tableMergeElementPlus(data, { range: { row: 1, col: 2 }, spanType: 'colSpan' })" border>
+      <el-table-column v-for="col in columns" :key="col.prop" v-bind="col" />
     </el-table>
   </div>
+
+  <h2 class="box">筛选指定列</h2>
+  <div class="box">
+    <p>比如后端返回很多数据，而只渲染某些数据的时候，这时候可以指定没列要渲染的 keys</p>
+    <pre>
+const data = [
+  { id: 1, a: 8, b: 8, c: 2, d: 0 },
+  { id: 2, a: 2, b: 4, c: 4, d: 5 },
+  { id: 3, a: 8, b: 8, c: 4, d: 4 },
+  { id: 4, a: 5, b: 8, c: 4, d: 1 },
+  { id: 5, a: 5, b: 3, c: 3, d: 2 }
+];
+
+const columns = [
+  { prop: 'a', label: 'A列', align: 'center' },
+  { prop: 'b', label: 'B列', align: 'center' },
+  { prop: 'c', label: 'C列', align: 'center' },
+  { prop: 'd', label: 'D列', align: 'center' }
+];
+
+tableMergeElementPlus(data, { keys: ['a', 'b', 'c', 'd'], spanType: 'colSpan' })
+</pre
+    >
+    <el-table :data="data" :span-method="tableMergeElementPlus(data, { keys: ['a', 'b', 'c', 'd'], spanType: 'colSpan' })" border>
+      <el-table-column v-for="col in columns.filter((col) => col.prop !== 'id')" :key="col.prop" v-bind="col" />
+    </el-table>
+  </div>
+
+  <br />
 </template>
 
 <style lang="scss" scoped>
+.title {
+  margin: 30px;
+  text-align: center;
+  font-size: 30px;
+}
 .box {
   margin: 30px;
 
-  &__title {
-    margin-bottom: 10px;
-    font-size: 20px;
+  pre {
+    background-color: #f2f2f2;
+    padding: 10px;
+    border-radius: 5px;
   }
 }
 </style>

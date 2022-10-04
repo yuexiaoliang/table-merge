@@ -6,23 +6,24 @@ interface SpanMethodProps {
   columnIndex: number;
 }
 
-export default (data: any[], options?: TableMergeOptions, spanType: SpanTypes = 'rowSpan') => {
-  const table = createTableMerge(data, options);
-  const merged = getTableMerged(table, spanType);
+export interface TableMergeElementPlusOptions extends TableMergeOptions {
+  spanType?: SpanTypes;
+}
+
+export default (data: any[], options?: TableMergeElementPlusOptions) => {
+  const { spanType = 'rowSpan', keys, range } = options || {};
+
+  const table = createTableMerge(data, { keys, range });
+  const merged = getTableMerged(table);
   if (!merged) return;
 
   return ({ rowIndex, columnIndex }: SpanMethodProps) => {
-    let rowspan = 1;
-    let colspan = 1;
+    const cell = merged[rowIndex][columnIndex];
 
-    if (spanType === 'rowSpan') {
-      rowspan = merged[rowIndex][columnIndex];
-    }
-
-    if (spanType === 'colSpan') {
-      colspan = merged[rowIndex][columnIndex];
-    }
-
-    return { rowspan, colspan };
+    const result = {
+      rowspan: spanType === 'rowSpan' ? cell[0] : 1,
+      colspan: spanType === 'colSpan' ? cell[1] : 1
+    };
+    return result;
   };
 };
