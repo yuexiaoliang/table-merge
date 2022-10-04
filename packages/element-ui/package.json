@@ -1,5 +1,5 @@
 {
-  "name": "@table-merge/core",
+  "name": "@table-merge/element-ui",
   "version": "1.0.0",
   "type": "module",
   "module": "dist/index.mjs",
@@ -11,8 +11,9 @@
   "scripts": {
     "build": "vite build --config vite.config.ts"
   },
-  "description": "极佳、极简、通用的表格合并方案，已提供多个 UI 框架开箱即用。",
+  "description": "极佳、极简、通用的表格合并方案，element-ui 开箱即用。",
   "keywords": [
+    "element-ui",
     "table-merge"
   ],
   "author": "岳晓亮",
@@ -21,5 +22,8 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/yuexiaoliang/table-merge.git"
+  },
+  "dependencies": {
+    "@table-merge/element-plus": "workspace:*"
   }
 }

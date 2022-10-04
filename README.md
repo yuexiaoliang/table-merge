@@ -1,28 +1,24 @@
 # table-merge
 
-极佳的表格合并单元格方案，跨框架、跨组件库可用，已提供多个 UI 框架开箱即用。
+极佳、极简、通用的表格合并方案，已提供多个 UI 框架开箱即用。
 
 ## 开箱即用的 UI 库
 
 指以针对框架进行进一步封装，直接引用即可使用。
 
-- [x] Element Plus
+- [x] [Element-UI](https://github.com/yuexiaoliang/table-merge/tree/master/packages/element-ui)
 
-  抱歉，使用方式暂时只能参考：[examples/element-plus/App.vue](https://github.com/yuexiaoliang/table-merge/blob/master/examples/element-plus/App.vue)
+- [x] [Element Plus](https://github.com/yuexiaoliang/table-merge/tree/master/packages/element-plus)
 
-- [x] Ant Design Vue
-
-  抱歉，使用方式暂时只能参考：[examples/ant-design-vue/App.vue](https://github.com/yuexiaoliang/table-merge/blob/master/examples/ant-design-vue/App.vue)
+- [x] [Ant Design Vue](https://github.com/yuexiaoliang/table-merge/tree/master/packages/ant-design-vue)
 
 ## 计划支持开箱即用 UI 库
 
 指暂未针对框架进行进一步封装，将来会提供支持。
 
-通过 `@table-merge/core` 导出的方法自己封装最少只需要 10 行以内代码哦~
+通过 `@table-merge/core` 导出的方法自己封装只需要极少的代码哦~
 
 参考：[packages/ant-design-vue/index.ts](https://github.com/yuexiaoliang/table-merge/blob/master/packages/ant-design-vue/index.ts) 或 [packages/element-plus/index.ts](https://github.com/yuexiaoliang/table-merge/blob/master/packages/element-plus/index.ts)
-
-- [ ] Element-UI
 
 - [ ] Ant Design
 

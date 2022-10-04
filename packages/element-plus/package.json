@@ -1,6 +1,6 @@
 {
   "name": "@table-merge/element-plus",
-  "version": "0.1.2",
+  "version": "1.0.0",
   "type": "module",
   "module": "dist/index.mjs",
   "main": "dist/index.cjs",
@@ -11,7 +11,7 @@
   "scripts": {
     "build": "vite build --config vite.config.ts"
   },
-  "description": "element-plus table-merge",
+  "description": "极佳、极简、通用的表格合并方案，element-plus 开箱即用。",
   "keywords": [
     "element-plus",
     "table-merge"

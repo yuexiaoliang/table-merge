@@ -1,6 +1,6 @@
 {
   "name": "table-merge",
-  "version": "0.1.2",
+  "version": "1.0.0",
   "type": "module",
   "module": "dist/index.mjs",
   "main": "dist/index.cjs",
@@ -11,9 +11,10 @@
   "scripts": {
     "build": "vite build --config vite.config.ts"
   },
-  "description": "ant-design-vue element-plus table-merge",
+  "description": "极佳、极简、通用的表格合并方案，已提供多个 UI 框架开箱即用。",
   "keywords": [
     "ant-design-vue",
+    "element-ui",
     "element-plus",
     "table-merge"
   ],
@@ -27,6 +28,7 @@
   "dependencies": {
     "@table-merge/core": "workspace:*",
     "@table-merge/ant-design-vue": "workspace:*",
+    "@table-merge/element-ui": "workspace:*",
     "@table-merge/element-plus": "workspace:*"
   }
 }

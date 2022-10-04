@@ -1,18 +1,17 @@
 {
-  "version": "0.1.2",
+  "version": "1.0.0",
   "main": "index.ts",
   "scripts": {
-    "preview:el": "vite examples/element-plus --config vite.config.ts",
-    "preview:antdv": "vite examples/ant-design-vue --config vite.config.ts",
     "test": "vitest",
     "test:watch": "vitest watch",
     "coverage": "vitest run --coverage",
     "build": "pnpm run -r build",
-    "build:core": "pnpm --filter @table-merge/core build"
+    "release": "pnpm publish -r --access public"
   },
-  "description": "ant-design-vue element-plus table-merge",
+  "description": "极佳、极简、通用的表格合并方案，已提供多个 UI 框架开箱即用。",
   "keywords": [
     "ant-design-vue",
+    "element-ui",
     "element-plus",
     "table-merge"
   ],
@@ -27,6 +26,7 @@
     "@table-merge/ant-design-vue": "workspace:*",
     "@table-merge/core": "workspace:*",
     "@table-merge/element-plus": "workspace:*",
+    "@table-merge/element-ui": "workspace:*",
     "@types/node": "^18.7.17",
     "@vitejs/plugin-vue": "^3.1.0",
     "@vitejs/plugin-vue-jsx": "^2.0.1",
