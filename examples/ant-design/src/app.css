@@ -1,0 +1,13 @@
+.title {
+  margin: 30px;
+  text-align: center;
+  font-size: 30px;
+}
+.box {
+  margin: 30px;
+}
+.box pre {
+  background-color: #f2f2f2;
+  padding: 10px;
+  border-radius: 5px;
+}

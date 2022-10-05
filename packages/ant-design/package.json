@@ -1,0 +1,29 @@
+{
+  "name": "@table-merge/ant-design",
+  "version": "1.0.0",
+  "type": "module",
+  "module": "dist/index.mjs",
+  "main": "dist/index.cjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "vite build --config vite.config.ts"
+  },
+  "description": "极佳、极简、通用的表格合并方案，ant-design 开箱即用。",
+  "keywords": [
+    "ant-design",
+    "table-merge"
+  ],
+  "author": "岳晓亮",
+  "license": "ISC",
+  "homepage": "https://github.com/yuexiaoliang/table-merge",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yuexiaoliang/table-merge.git"
+  },
+  "dependencies": {
+    "@table-merge/core": "workspace:*"
+  }
+}
