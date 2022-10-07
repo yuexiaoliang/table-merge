@@ -141,11 +141,13 @@ importers:
 
   packages/table-merge:
     specifiers:
+      '@table-merge/ant-design': workspace:*
       '@table-merge/ant-design-vue': workspace:*
       '@table-merge/core': workspace:*
       '@table-merge/element-plus': workspace:*
       '@table-merge/element-ui': workspace:*
     dependencies:
+      '@table-merge/ant-design': link:../ant-design
       '@table-merge/ant-design-vue': link:../ant-design-vue
       '@table-merge/core': link:../core
       '@table-merge/element-plus': link:../element-plus

@@ -1,6 +1,6 @@
 {
   "name": "table-merge",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "module": "dist/index.mjs",
   "main": "dist/index.cjs",
@@ -13,10 +13,16 @@
   },
   "description": "极佳、极简、通用的表格合并方案，已提供多个 UI 框架开箱即用。",
   "keywords": [
+    "ant-design",
     "ant-design-vue",
     "element-ui",
     "element-plus",
-    "table-merge"
+    "table-merge",
+    "@table-merge/core",
+    "@table-merge/ant-design",
+    "@table-merge/ant-design-vue",
+    "@table-merge/element-ui",
+    "@table-merge/element-plus"
   ],
   "author": "岳晓亮",
   "license": "ISC",
@@ -26,9 +32,10 @@
     "url": "https://github.com/yuexiaoliang/table-merge.git"
   },
   "dependencies": {
-    "@table-merge/core": "workspace:*",
+    "@table-merge/ant-design": "workspace:*",
     "@table-merge/ant-design-vue": "workspace:*",
-    "@table-merge/element-ui": "workspace:*",
-    "@table-merge/element-plus": "workspace:*"
+    "@table-merge/core": "workspace:*",
+    "@table-merge/element-plus": "workspace:*",
+    "@table-merge/element-ui": "workspace:*"
   }
 }
