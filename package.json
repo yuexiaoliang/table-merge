@@ -6,6 +6,7 @@
     "test:watch": "vitest watch",
     "coverage": "vitest run --coverage",
     "dev:examples": "pnpm --filter ./examples/** run -r dev",
+    "dev:play": "pnpm --filter @table-merge/playground run -r dev",
     "build": "pnpm --filter ./packages/** run -r build",
     "release": "pnpm --filter ./packages/** publish -r --access public"
   },
