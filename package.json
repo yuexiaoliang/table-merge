@@ -5,8 +5,9 @@
     "test": "vitest",
     "test:watch": "vitest watch",
     "coverage": "vitest run --coverage",
-    "build": "pnpm --filter *table-merge* run -r build",
-    "release": "pnpm --filter *table-merge* publish -r --access public"
+    "dev:examples": "pnpm --filter ./examples/** run -r dev",
+    "build": "pnpm --filter ./packages/** run -r build",
+    "release": "pnpm --filter ./packages/** publish -r --access public"
   },
   "description": "极佳、极简、通用的表格合并方案，已提供多个 UI 框架开箱即用。",
   "keywords": [
