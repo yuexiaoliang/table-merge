@@ -19,3 +19,7 @@
 ## @table-merge/element-plus
 
 [参考文档](https://github.com/yuexiaoliang/table-merge/tree/master/packages/element-plus)
+
+## License
+
+MIT

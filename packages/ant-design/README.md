@@ -70,3 +70,7 @@ const columns = [
 ## Examples
 
 ![alt examples](./examples.png)
+
+## License
+
+MIT

@@ -58,3 +58,7 @@ export default (data: any[], options?: TableMergeElementPlusOptions) => {
   };
 };
 ```
+
+## License
+
+MIT
