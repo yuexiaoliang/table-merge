@@ -4,11 +4,11 @@ importers:
 
   .:
     specifiers:
-      '@table-merge/ant-design': workspace:^1.0.0
-      '@table-merge/ant-design-vue': workspace:1.0.0
-      '@table-merge/core': workspace:1.0.0
-      '@table-merge/element-plus': workspace:1.0.0
-      '@table-merge/element-ui': workspace:1.0.0
+      '@table-merge/ant-design': workspace:*
+      '@table-merge/ant-design-vue': workspace:*
+      '@table-merge/core': workspace:*
+      '@table-merge/element-plus': workspace:*
+      '@table-merge/element-ui': workspace:*
       '@types/node': ^18.8.2
       '@vitejs/plugin-vue': ^3.1.2
       '@vitejs/plugin-vue-jsx': ^2.0.1
@@ -16,7 +16,7 @@ importers:
       ant-design-vue: ^3.2.12
       element-plus: ^2.2.17
       sass: ^1.55.0
-      table-merge: workspace:1.0.0
+      table-merge: workspace:*
       typescript: ^4.8.4
       vite: ^3.1.4
       vite-plugin-dts: ^1.6.4
@@ -44,7 +44,7 @@ importers:
 
   examples/ant-design:
     specifiers:
-      '@table-merge/ant-design': workspace:^1.0.0
+      '@table-merge/ant-design': workspace:*
       '@types/react': ^18.0.17
       '@types/react-dom': ^18.0.6
       '@vitejs/plugin-react': ^2.1.0
@@ -117,6 +117,12 @@ importers:
       typescript: 4.8.4
       vite: 3.1.4
       vue-tsc: 0.40.13_typescript@4.8.4
+
+  packages/ant-design:
+    specifiers:
+      '@table-merge/core': workspace:*
+    dependencies:
+      '@table-merge/core': link:../core
 
   packages/ant-design-vue:
     specifiers:
@@ -853,7 +859,7 @@ packages:
       vite: ^3.0.0
       vue: ^3.2.25
     dependencies:
-      vite: 3.1.4_sass@1.55.0
+      vite: 3.1.4
       vue: 3.2.40
     dev: true
 
@@ -3100,6 +3106,7 @@ packages:
   /vite-plugin-dts/1.6.4_vite@3.1.4:
     resolution: {integrity: sha512-NaCkdhb9f+0jvmIMQRXbRkSokz6AANbTLjoZOhbeXw3IyLhkM0pTguicM14X8/XEAruZ8XdOM/1MyRgEi70P/Q==}
     engines: {node: ^14.18.0 || >=16.0.0}
+    requiresBuild: true
     peerDependencies:
       vite: '>=2.9.0'
     dependencies:
