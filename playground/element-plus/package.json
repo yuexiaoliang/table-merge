@@ -1,5 +1,5 @@
 {
-  "name": "@table-merge/playground",
+  "name": "@table-merge/play-element-plus",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@table-merge/element-plus": "workspace:*",
     "vue": "^3.2.37"
   },
   "devDependencies": {

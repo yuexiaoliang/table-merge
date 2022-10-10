@@ -4,6 +4,7 @@ importers:
 
   .:
     specifiers:
+      '@originjs/vite-plugin-federation': ^1.1.9
       '@table-merge/ant-design': workspace:*
       '@table-merge/ant-design-vue': workspace:*
       '@table-merge/core': workspace:*
@@ -23,6 +24,7 @@ importers:
       vitest: ^0.23.4
       vue: ^3.2.40
     devDependencies:
+      '@originjs/vite-plugin-federation': 1.1.9
       '@table-merge/ant-design': link:packages/ant-design
       '@table-merge/ant-design-vue': link:packages/ant-design-vue
       '@table-merge/core': link:packages/core
@@ -159,14 +161,35 @@ importers:
       '@table-merge/element-plus': link:../element-plus
       '@table-merge/element-ui': link:../element-ui
 
-  playground:
+  playground/element-plus:
     specifiers:
+      '@table-merge/element-plus': workspace:*
       '@vitejs/plugin-vue': ^3.1.0
       typescript: ^4.6.4
       vite: ^3.1.0
       vue: ^3.2.37
       vue-tsc: ^0.40.4
     dependencies:
+      '@table-merge/element-plus': link:../../packages/element-plus
+      vue: 3.2.40
+    devDependencies:
+      '@vitejs/plugin-vue': 3.1.2_vite@3.1.4+vue@3.2.40
+      typescript: 4.8.4
+      vite: 3.1.4
+      vue-tsc: 0.40.13_typescript@4.8.4
+
+  playground/host:
+    specifiers:
+      '@table-merge/element-plus': workspace:^1.0.1
+      '@vitejs/plugin-vue': ^3.1.0
+      normalize.css: ^8.0.1
+      typescript: ^4.6.4
+      vite: ^3.1.0
+      vue: ^3.2.37
+      vue-tsc: ^0.40.4
+    dependencies:
+      '@table-merge/element-plus': link:../../packages/element-plus
+      normalize.css: 8.0.1
       vue: 3.2.40
     devDependencies:
       '@vitejs/plugin-vue': 3.1.2_vite@3.1.4+vue@3.2.40
@@ -719,6 +742,14 @@ packages:
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.13.0
+    dev: true
+
+  /@originjs/vite-plugin-federation/1.1.9:
+    resolution: {integrity: sha512-JD/+rkGrKVhiTu3ZDxspRXbQNUkQ+hii0oiBuwC4W0i7emEDfbm9yUHAHff5/auYWiWZWCF/ort/oqoWDIbiyg==}
+    engines: {node: '>=14.0.0', pnpm: '>=7.0.1'}
+    dependencies:
+      estree-walker: 1.0.1
+      magic-string: 0.25.9
     dev: true
 
   /@rushstack/node-core-library/3.53.0:
@@ -1756,6 +1787,10 @@ packages:
     engines: {node: '>=0.8.0'}
     dev: true
 
+  /estree-walker/1.0.1:
+    resolution: {integrity: sha512-1fMXF3YP4pZZVozF8j/ZLfvnR8NSIljt56UhbZ5PeeDmmGHpgpdwQt7ITlGvYaQukCvuBRMLEiKiYC+oeIg4cg==}
+    dev: true
+
   /estree-walker/2.0.2:
     resolution: {integrity: sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w==}
 
@@ -2185,6 +2220,10 @@ packages:
 
   /normalize-wheel/1.0.1:
     resolution: {integrity: sha512-1OnlAPZ3zgrk8B91HyRj+eVv+kS5u+Z0SCsak6Xil/kmgEia50ga7zfkumayonZrImffAxPU/5WcyGhzetHNPA==}
+    dev: false
+
+  /normalize.css/8.0.1:
+    resolution: {integrity: sha512-qizSNPO93t1YUuUhP22btGOo3chcvDFqFaj2TRybP0DMxkHOCTYwp3n34fel4a31ORXy4m1Xq0Gyqpb5m33qIg==}
     dev: false
 
   /once/1.4.0:

@@ -6,7 +6,12 @@
     "test:watch": "vitest watch",
     "coverage": "vitest run --coverage",
     "dev:examples": "pnpm --filter ./examples/** run -r dev",
-    "dev:play": "pnpm --filter @table-merge/playground run -r dev",
+    "dev:play": "pnpm --filter ./playground/** run -r dev",
+    "dev:play-host": "pnpm --filter @table-merge/play-host run -r dev",
+    "build:play": "pnpm --filter ./playground/** run -r build",
+    "build:play-el": "pnpm --filter @table-merge/play-element-plus run -r build",
+    "preview:play": "pnpm --filter ./playground/** run -r preview",
+    "preview:play-el": "pnpm --filter @table-merge/play-element-plus run -r preview",
     "build": "pnpm --filter ./packages/** run -r build",
     "release": "pnpm --filter ./packages/** publish -r --access public"
   },
@@ -31,6 +36,7 @@
     "url": "https://github.com/yuexiaoliang/table-merge.git"
   },
   "devDependencies": {
+    "@originjs/vite-plugin-federation": "^1.1.9",
     "@table-merge/ant-design": "workspace:*",
     "@table-merge/ant-design-vue": "workspace:*",
     "@table-merge/core": "workspace:*",
