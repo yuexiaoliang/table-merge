@@ -8,6 +8,7 @@
     "dev:examples": "pnpm --filter ./examples/** run -r dev",
     "dev:play": "pnpm --filter ./playground/** run -r dev",
     "dev:play-host": "pnpm --filter @table-merge/play-host run -r dev",
+    "dev:play-el": "pnpm --filter @table-merge/play-element-plus run -r dev",
     "build:play": "pnpm --filter ./playground/** run -r build",
     "build:play-el": "pnpm --filter @table-merge/play-element-plus run -r build",
     "preview:play": "pnpm --filter ./playground/** run -r preview",

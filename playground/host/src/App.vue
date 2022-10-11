@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import BaseLayout from '@/components/base-layout.vue';
+import MainLayout from '@/components/main-layout.vue';
 </script>
 
 <template>
-  <base-layout></base-layout>
+  <main-layout></main-layout>
 </template>
 
 <style scoped></style>
