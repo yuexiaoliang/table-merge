@@ -25,7 +25,7 @@ document.addEventListener('mouseup', finishDrag);
 </script>
 
 <template>
-  <div class="layout" :style="{ '--editor-height': editorHeight + 'px' }">
+  <div class="layout dark" :style="{ '--editor-height': editorHeight + 'px' }">
     <div class="layout__preview">
       <main-preview></main-preview>
       <div class="shade" :class="{ 'shade--visible': isDragging }"></div>
@@ -65,22 +65,24 @@ document.addEventListener('mouseup', finishDrag);
 
   &__editor {
     position: relative;
+    width: 100%;
     height: var(--editor-height);
-    background-color: #242424;
-    border-top: 1px solid #494c50;
+    background-color: var(--main-bg-color);
+    color: var(--main-color);
 
     .drag-line {
       position: absolute;
       top: 0;
+      right: 0;
+      left: 0;
       z-index: 3;
-      width: 100%;
-      height: 3px;
+      height: 4px;
       background-color: transparent;
       transition: background-color 0.2s;
       cursor: n-resize;
 
       &:hover {
-        background-color: #565656;
+        background-color: var(--border-color);
       }
     }
   }
