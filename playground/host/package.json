@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@table-merge/core": "workspace:^*",
     "@table-merge/element-plus": "workspace:*",
     "normalize.css": "^8.0.1",
     "vue": "^3.2.37"

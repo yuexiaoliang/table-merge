@@ -1,7 +1,10 @@
 :root {
   --border-color: #494c50;
   --main-bg-color: #202124;
-  --main-color: #fff;
+  --main-color: var(--el-text-color-regular);
   --editor-padding: 15px;
+
   --tools-panel-width: 400px;
+  --tools-remark-color: var(--el-text-color-regular);
+  --block-title-border-color: var(--el-color-primary);
 }

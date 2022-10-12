@@ -1,0 +1,18 @@
+.block-title {
+  position: relative;
+  padding-bottom: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--main-color);
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    left: 0;
+    height: 4px;
+    width: 30px;
+    background-color: var(--block-title-border-color);
+    border-radius: 2px;
+  }
+}
